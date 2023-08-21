@@ -2,6 +2,7 @@ import sqlite3
 
 from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash
 from werkzeug.exceptions import abort
+import logging
 
 # Function to get a database connection.
 # This function connects to database with the name `database.db`
@@ -10,12 +11,33 @@ def get_db_connection():
     connection.row_factory = sqlite3.Row
     return connection
 
+@app.route('/healthz')
+def healthcheck():
+    response = app.response_class(
+        response=json.dumps({"result" : "OK - healthy"}),
+        status=200,
+        mimetype='application/json'
+    )
+    app.logger.info('Status request successfull')
+    app.logger.debug('DEBUG message')
+    return response
+
+@app.route('/metrics')
+def metrics():
+    response = app.response_class(
+        response=json.dumps({"status":"success","code":0,"data":{"UserCount":140,"UserCountActive":23}}),
+        status=200,
+        mimetype='application/json'
+    )
+    app.logger.info('Metrics request successfull')
+    return response
+
 # Function to get a post using its ID
 def get_post(post_id):
     connection = get_db_connection()
-    post = connection.execute('SELECT * FROM posts WHERE id = ?',
-                        (post_id,)).fetchone()
+    post = connection.execute('SELECT * FROM posts WHERE id = ?', (post_id,)).fetchone()
     connection.close()
+    app.logger.info('An existing article is retrieved, the title is', post.title)
     return post
 
 # Define the Flask application
@@ -36,13 +58,15 @@ def index():
 def post(post_id):
     post = get_post(post_id)
     if post is None:
-      return render_template('404.html'), 404
+        app.logger.info('A non-existing article is accessed and a 404 page is returned')
+        return render_template('404.html'), 404
     else:
-      return render_template('post.html', post=post)
+        return render_template('post.html', post=post)
 
 # Define the About Us page
 @app.route('/about')
 def about():
+    app.logger.info('About Us page is retrieved')
     return render_template('about.html')
 
 # Define the post creation functionality 
@@ -56,12 +80,13 @@ def create():
             flash('Title is required!')
         else:
             connection = get_db_connection()
-            connection.execute('INSERT INTO posts (title, content) VALUES (?, ?)',
-                         (title, content))
+            connection.execute('INSERT INTO posts (title, content) VALUES (?, ?)', (title, content))
             connection.commit()
             connection.close()
 
             return redirect(url_for('index'))
+    
+        app.logger.info('An existing article is created, the title is', title)
 
     return render_template('create.html')
 
