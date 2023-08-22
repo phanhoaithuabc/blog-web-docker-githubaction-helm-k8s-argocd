@@ -51,3 +51,14 @@ INFO:app:01/08/2021, 22:40:10, Article "2020 CNCF Annual Report" retrieved!
 
 ## Continuous Integration with GitHub Actions
 
+## Kubernetes Declarative Manifests
+
+To create a vagrant box and ssh into it, use the following commands:
+```bash
+# create a vagrant box using the Vagrantfile in the current directory
+vagrant up
+
+# SSH into the vagrant box
+# Note: this command uses the .vagrant folder to identify the details of the vagrant box
+vagrant ssh
+```
