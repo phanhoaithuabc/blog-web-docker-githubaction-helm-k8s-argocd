@@ -11,7 +11,7 @@ spec:
   source:
     helm:
       valueFiles:
-      - helm/values-prod.yaml 
+      - values-prod.yaml 
     path: helm
     repoURL: https://github.com/phanhoaithuabc/blog-web-docker-githubaction-helm-k8s-argocd.git
     targetRevision: HEAD
