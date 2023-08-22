@@ -2,7 +2,9 @@ import sqlite3
 
 from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash
 from werkzeug.exceptions import abort
-import logging, time
+import logging, time, sys
+
+app = Flask(__name__)
 
 # Function to get a database connection.
 # This function connects to database with the name `database.db`
@@ -87,12 +89,18 @@ def create():
             connection.commit()
             connection.close()
 
-            app.logger.debug(log_format('An existing article is created, the title is', title))
+            app.logger.debug(log_format(f"New post \"{title}\" created!"))
             return redirect(url_for('index'))
-    
 
     return render_template('create.html')
 
 # start the application on port 3111
 if __name__ == "__main__":
+    logging.basicConfig(
+    level=logging.DEBUG,
+    handlers=[
+        logging.StreamHandler(sys.stdout),
+        logging.StreamHandler(sys.stderr)
+        ]
+    )
    app.run(host='0.0.0.0', port='3111')

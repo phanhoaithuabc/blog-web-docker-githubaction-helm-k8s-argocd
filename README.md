@@ -46,3 +46,8 @@ INFO:werkzeug:127.0.0.1 - - [08/Jan/2021 22:40:06] "GET /metrics HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [08/Jan/2021 22:40:09] "GET / HTTP/1.1" 200 -
 INFO:app:01/08/2021, 22:40:10, Article "2020 CNCF Annual Report" retrieved!
 ```
+
+## Docker for Application Packaging
+
+## Continuous Integration with GitHub Actions
+
