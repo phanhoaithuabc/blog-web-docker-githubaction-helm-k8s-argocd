@@ -8,7 +8,7 @@ service:
 image:
   repository: phanhoaithu/techtrends 
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 resources: 
   requests: 
