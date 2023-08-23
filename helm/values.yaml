@@ -22,8 +22,8 @@ replicaCount: 1
 
 containerPort: 3111
 livenessProbe:
-    path: /healthz
-    port: 3111
+  path: /healthz
+  port: 3111
 readinessProbe:
-    path: /healthz
-    port: 3111
+  path: /healthz
+  port: 3111

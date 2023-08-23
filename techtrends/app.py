@@ -4,7 +4,9 @@ from flask import Flask, jsonify, json, render_template, request, url_for, redir
 from werkzeug.exceptions import abort
 import logging, time, sys
 
+# Define the Flask application
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'your secret key'
 
 # Function to get a database connection.
 # This function connects to database with the name `database.db`
@@ -43,10 +45,6 @@ def get_post(post_id):
     connection.close()
     # app.logger.info('An existing article is retrieved, the title is', post.title)
     return post
-
-# Define the Flask application
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your secret key'
 
 # Define the main route of the web application 
 @app.route('/')
