@@ -4,6 +4,8 @@ from flask import Flask, jsonify, json, render_template, request, url_for, redir
 from werkzeug.exceptions import abort
 import logging, time, sys
 
+connection_count = 0
+
 # Define the Flask application
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your secret key'
@@ -13,6 +15,8 @@ app.config['SECRET_KEY'] = 'your secret key'
 def get_db_connection():
     connection = sqlite3.connect('database.db')
     connection.row_factory = sqlite3.Row
+    global connection_count
+    connection_count += 1
     return connection
 
 def log_format(message): 
@@ -30,8 +34,11 @@ def healthcheck():
 
 @app.route('/metrics')
 def metrics():
+    connection = get_db_connection()
+    posts = connection.execute('SELECT * FROM posts').fetchall()
+    connection.close()
     response = app.response_class(
-        response=json.dumps({"status":"success","code":0,"data":{"UserCount":140,"UserCountActive":23}}),
+        response=json.dumps({"db_connection_count": connection_count, "post_count": len(posts)}),
         status=200,
         mimetype='application/json'
     )
