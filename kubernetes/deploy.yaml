@@ -28,7 +28,7 @@ spec:
         readinessProbe:
           httpGet:
             path: /healthz
-            port: 6112
+            port: 3111
         resources:
           requests:
             memory: "64Mi"
