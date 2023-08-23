@@ -1,11 +1,11 @@
 # blog-web-docker-githubaction-helm-k8s-argocd
 
-Apply the best development practices and develop the status and health check endpoints for the TechTrends application.
-Package the TechTrends application by creating a Dockerfile and Docker image.
-Implement the Continuous Integration practices, by using GitHub Actions to automate the build and push of the Docker image to DockerHub.
-Construct the Kubernetes declarative manifests to deploy TechTrends to a sandbox namespace within a Kubernetes cluster. The cluster should be provisioned using k3s in a vagrant box.
-Template the Kubernetes manifests using a Helm chart and provide the input configuration files for staging and production environments.
-Implement the Continuous Delivery practices, by deploying the TechTrends application to staging and production environments using ArgoCD and the Helm chart.
+- Apply the best development practices and develop the status and health check endpoints for the TechTrends application.
+- Package the TechTrends application by creating a Dockerfile and Docker image.
+- Implement the Continuous Integration practices, by using GitHub Actions to automate the build and push of the Docker image to DockerHub.
+- Construct the Kubernetes declarative manifests to deploy TechTrends to a sandbox namespace within a Kubernetes cluster. The cluster should be provisioned using k3s in a vagrant box.
+- Template the Kubernetes manifests using a Helm chart and provide the input configuration files for staging and production environments.
+- Implement the Continuous Delivery practices, by deploying the TechTrends application to staging and production environments using ArgoCD and the Helm chart.
 
 <img src="screenshots/flow-techtrends.png"></img>
 
@@ -15,7 +15,7 @@ Implement the Continuous Delivery practices, by deploying the TechTrends applica
 
 ## Best Practices For Application Deployment
 
-Healthcheck endpoint
+### 1. Healthcheck endpoint
 Build the /healthz endpoint for the TechTrends application. The endpoint should return the following response:
 
 An HTTP 200 status code
@@ -31,7 +31,7 @@ Example output: {"db_connection_count": 1, "post_count": 7}
 
 Tips: The /metrics endpoint response should NOT be hardcoded.
 
-Logs
+### 2. Logs
 Extend the TechTrends application to log the following events:
 
 An existing article is retrieved. The title of the article should be recorded in the log line.
